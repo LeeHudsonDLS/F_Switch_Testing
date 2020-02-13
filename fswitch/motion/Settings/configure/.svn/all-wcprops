@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/controls/!svn/ver/147233/diamond/trunk/motion/BL04I/Settings/configure
+END
+RELEASE
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/controls/!svn/ver/151870/diamond/trunk/motion/BL04I/Settings/configure/RELEASE
+END
+generate_homing_plcs.py
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/controls/!svn/ver/147233/diamond/trunk/motion/BL04I/Settings/configure/generate_homing_plcs.py
+END

@@ -1,0 +1,28 @@
+substitute "MAIN_PLC_NO=20"
+substitute "SENTINEL_PLC_NO=21"
+substitute "ACTA_PLC_NO=22"
+substitute "ACTB_PLC_NO=23"
+substitute "HOME_PLC_NO=24"
+substitute "ABORT_PLC_NO=25"
+
+substitute "ACTUATOR_A_DISABLED=0"
+substitute "ACTUATOR_B_DISABLED=1"
+
+substitute "TRANS_A=5"
+substitute "ROCKER_A=6"
+substitute "FIN_POS_A=-541"
+substitute "FOUT_POS_A=547"
+substitute "DWELL_A=50"
+
+substitute "TRANS_B=7"
+substitute "ROCKER_B=8"
+substitute "FIN_POS_B=-541"
+substitute "FOUT_POS_B=547"
+substitute "DWELL_B=50"
+
+substitute "FILTER_INCREMENT=4096"
+substitute "ROCKER_HOMING_TIMEOUT=10000"
+substitute "TRANSLATION_HOMING_TIMEOUT=60000"
+substitute "ROCKER_SLOW_VEL=0.5"
+
+

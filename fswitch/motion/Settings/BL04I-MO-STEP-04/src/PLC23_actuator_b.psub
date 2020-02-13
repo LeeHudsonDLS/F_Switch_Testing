@@ -1,0 +1,11 @@
+include "FSwitchGlobalSubs.psub"
+
+substitute "TRANS=$(TRANS_B)"
+substitute "ROCKER=$(ROCKER_B)"
+substitute "ACTUATOR_PLC_NO=$(ACTB_PLC_NO)"
+substitute "FIN_POS=$(FIN_POS_B)"
+substitute "FOUT_POS=$(FOUT_POS_B)"
+substitute "DWELL=$(DWELL_B)"
+
+substitute "ACTUATOR=2"
+include "F_Switch_Actuator_PLC.pmc"

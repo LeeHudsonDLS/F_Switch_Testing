@@ -1,0 +1,38 @@
+CLOSE
+
+;********************** Interlock Chain **********************
+;
+; Interlock chain for Robot and sample environment
+;
+; Written by James O'Hea (16/06/11)
+;
+;*************************************************************
+
+
+;************** General Purpose Inputs *************
+
+#define CIA_PMAC_2_OK			M0
+#define Beamline_Disable_Request	M1
+
+;************** General Purpose Outputs ************
+
+#define GeoBrick4_OK			M32
+#define Disable_CIA_PMAC_2		M33
+
+OPEN PLC8
+clear
+
+if (CIA_PMAC_2_OK = 1)
+    GeoBrick4_OK = 1
+else
+    GeoBrick4_OK = 0
+endif
+
+if (Beamline_Disable_Request = 1)
+    ; Tell EPICS to disable relevant stages
+    Disable_CIA_PMAC_2 = 1
+else
+    Disable_CIA_PMAC_2 = 0
+endif
+
+close

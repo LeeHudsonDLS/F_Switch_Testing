@@ -1,0 +1,9 @@
+
+; Transfocator
+#include "PLCs/PLC20_fswitch_main.pmc"
+#include "PLCs/PLC21_fswitch_status_sentinel.pmc"
+#include "PLCs/PLC22_actuator_a.pmc"
+#include "PLCs/PLC23_actuator_b.pmc"
+#include "PLCs/PLC25_fswitch_abort.pmc"
+#include "PLCs/PLC24_fswitch_homing.pmc"
+

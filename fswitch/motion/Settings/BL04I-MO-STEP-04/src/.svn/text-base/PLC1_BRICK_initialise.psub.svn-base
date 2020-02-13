@@ -1,0 +1,9 @@
+substitute "CMDS="
+substitute "PLC4=ENABLE"
+substitute "PLC5=ENABLE"
+substitute "PLC7=ENABLE"
+substitute "PLC8=ENABLE"
+substitute "PLC20=ENABLE"
+substitute "PLC24=ENABLE"
+
+include "PLC1_BRICK_initialise.pmc"

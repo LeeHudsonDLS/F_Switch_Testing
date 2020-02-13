@@ -1,0 +1,161 @@
+;MOTION CONTROLS KILL VERSION  - with Added Cure 10 June 2010
+;ONLY WORKS ON GEOBRICKS VER 1.946 and above (firmware)
+;
+;uses p601..608 and writes Error counts to p633 to p640
+;P60x (x=axis no) will be 0 for Brushless/DC Servo, 1 = Stepper 
+ 
+;PLC7 this PLC Kills the axis when it has been in position and idle for a while.
+;
+; relies on definitions for M189,289,...M889 and M190,290,390,..890 from 
+; ../../../Common/BRICK_M_variables.pmc
+
+p633..640=0 ;reset all faults counts and..
+P700..799=0 ;reset all used var when this pmc is first loaded
+
+CLOSE
+END GATHER
+DELETE GATHER
+DELETE TRACE
+
+#define AxisNumber P700
+
+;State Machines each axis
+#define AxisState P(P700+732)   ;P733, p734 etc
+
+;Off counters for each axis
+#define OffCount P(P700+764)  ;P765, P766 etc
+
+;PLC6 Configuration values 0=servo 1=Stepper
+#define Config P(P700+600) ;p601 p602 etc
+
+;fault counts
+;placed at p633+  each time one of these faults is detected this number is bumped.
+#define Faults P(P700+632)
+
+
+;Flags
+#define Enabled M(P700*100+39)
+#define ZeroVel M(p700*100+33)
+#define InPos M(P700*100+40)
+#define AENx M(P700*100+14)
+#define AmpModeBit M(P700*100+89)
+
+;control
+#define KillAxis &COMMAND"K"
+
+; timer
+#define Timer i5412  ;timer reserved for PLC7
+#define millisec 8388608/i10
+
+; define clock resolution in milliseconds
+#define Ticks 50   ;time check every 50 ms
+
+;Define timeout period in milliseconds change as appropriate
+;Geo Brick Normally Only 8 Axis!
+
+P701 = 5000
+P702 = 5000
+P703 = 5000
+P704 = 5000
+P705 = 5000
+P706 = 5000
+P707 = 5000
+P708 = 5000
+
+;now define a pointer
+#define OffTime P(P700+700)
+
+;set this to 1 to run PLC6
+#define ResetPending P799
+
+OPEN PLC 7
+CLEAR
+
+IF (Timer>Ticks*millisec) ;Sanity check
+  Timer=Ticks*millisec
+END IF
+
+IF (Timer<0)
+   Timer=Ticks*millisec ;add Timer to compensate for variance
+   AxisNumber = 1
+
+   ; Loop through all 8 axis
+   WHILE(AxisNumber < 9)
+
+      IF (AxisState=0)   ;state 0 , waiting for the machine to enable
+      AND(Enabled=1) ;and enabled  
+        ;at start - monitor configuration.
+        IF(AmpModeBit!=Config)  ;if the mode is not the same as configured
+           AxisState=1   ;check it again in state 1 to debounce
+        ELSE
+           AxisState=3   ;OK off and running
+           OffCount=0
+        END IF
+      END IF
+
+      IF(AxisState=1)           ;State 1;   mode was wrong  Check again 
+         IF(AmpModeBit!=Config)  ;if the mode is not the same as configured
+           ADDRESS#AxisNumber   ;better kill it
+           KillAxis
+           Faults=Faults+1      ;log fault
+           AxisState=999        ;Emergency state wait until reset again by PLC6
+           Config=-1
+           ResetPending=1     
+        ELSE
+           AxisState=3          ;phew all ok - off and running
+        END IF
+      END IF
+      
+;state 2 is reserved for test while running and / or foldback current limit
+      
+      IF(AxisState=3)           ;Enabled and Running
+         IF (ZeroVel=1)            ;and zero vel
+         AND(InPos=1)              ;and In position - Stationary
+            OffCount=OffCount+Ticks     ; for the required time
+            IF (OffCount!<OffTime)      ;timed out
+               ADDRESS#AxisNumber
+               KillAxis
+               IF(AmpModeBit!=Config)    ;Check Config Brushless, dc servo or stepper
+                  AxisState=4            ;no.. debounce
+               ELSE    
+                  AxisState=0            ;All Ok
+               END IF
+            END IF
+         ELSE
+            OffCount=0
+         END IF
+      ENDIF
+
+
+      IF(AxisState=4)           ;State 4   running mode was wrong double check 
+        IF(AmpModeBit!=Config)  ;if the mode is not the same as configured
+           Faults=Faults+1      ;log fault
+           AxisState=999        ;Emergency state wait until reset again by PLC6
+           Config=-1            ;
+           ResetPending=1     
+        ELSE
+           AxisState=0          ;phew all ok - off and running
+        END IF
+      END IF
+
+
+      IF (AxisState=999)        ;State emergency state
+         IF(Config!<0)
+            AxisState=0         ;Ok
+         END IF
+      END IF
+ 
+     AxisNumber = AxisNumber+1
+
+   ENDWHILE
+
+   IF(ResetPending=1)   ;enable PLC6, if required, only once per scan of all axis
+      ENABLE PLC6   ;reset Mode
+      ResetPending=0
+   END IF
+
+END IF
+CLOSE
+
+; ** End of PLC7 **
+

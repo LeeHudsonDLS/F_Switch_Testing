@@ -1,0 +1,8 @@
+; Transfocator
+#include "PLCs/PLC20_transfocator_main.pmc"
+#include "PLCs/PLC21_transfocator_filter_out.pmc"
+#include "PLCs/PLC22_transfocator_filter_in.pmc"
+#include "PLCs/PLC23_transfocator_homing.pmc"
+#include "PLCs/PLC24_transfocator_filter_mask.pmc"
+#include "PLCs/PLC25_transfocator_abort.pmc"
+

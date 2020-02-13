@@ -1,0 +1,88 @@
+;####################################################
+; DO NOT MODIFY: File created from src/PLC21_fswitch_status_sentinel.psub
+;####################################################
+
+
+
+
+
+
+
+;FSWITCH DUAL ACTUATOR Status Sentinel PLC
+;Description:
+;This PLC keeps the status word in a consistent state. As more than one PLC will need to write to the global
+;status it is important that the consistency is maintained. This PLC takes requests for the global status to
+;be changed and executed the request sequentially rather than concurrently. It also only updates the status 
+;if the request is valid, for example, an invalid request would be to set a bit to 0 if it is already 0. In 
+;the event of an invalid request the request is ignored.
+
+;INPUTS:	STATUS_BIT_REQUEST 			-	This is a bank of 10 P-variables. A PLC that wishes to interact with
+;											this PLC and changed the global status must have exclusive access
+;											to one of these P-variables. When a PLC wishes to change the global
+;											status it must write the bit/filter number (0-127) to this P-variable
+;			STATUS_BIT_STATE_REQUEST	 -	Exactly the same as STATUS_BIT_REQUEST but this is the desired
+;											state of the bit. Only when both STATUS_BIT_REQUEST and
+;											STATUS_BIT_STATE_REQUEST are > -1 will the sentinel PLC act.
+;
+;OUTPUTS:	GLOBAL_STATUS				-	The 8 x P-varibles representing the current status of the filters
+;Assumptions and conventions:
+;STATUS_BIT_REQUEST		0-127
+;STATUS_BIT_STATE_REQUEST	0-1
+
+; Macros (and example values):
+; - SENTINEL_PLC_NO 			= 21 PLC Number for this PLC. Must match the definition in the main PLC, e.g 21
+; - MAIN_PLC_NO 	= 20  PLC Number for the main PLC, e.g 20
+
+CLOSE
+DELETE GATHER
+DELETE TRACE
+
+#DEFINE PLC_NO	21
+#DEFINE MAIN_PLC_NO	20
+
+#DEFINE STATUS_BIT_REQUEST			P(100*PLC_NO + 10 + ITERATOR)
+#DEFINE STATUS_BIT_STATE_REQUEST	P(100*PLC_NO + 20 + ITERATOR)
+
+#DEFINE BANK	P(100*PLC_NO + 2)
+#DEFINE GLOBAL_STATUS	P(100*MAIN_PLC_NO + 30 + (BANK-1))
+
+#DEFINE STATUS_BIT_REQUEST_DEC		INT((EXP(INT((STATUS_BIT_REQUEST%16))*LN(2)))+0.1)
+#DEFINE ITERATOR	P(100*PLC_NO + 48)
+#DEFINE COUNTER	P(100*PLC_NO + 1)
+
+
+
+OPEN PLC PLC_NO
+CLEAR
+
+ITERATOR = 0
+WHILE(ITERATOR < 10)
+	STATUS_BIT_REQUEST = -1
+	STATUS_BIT_STATE_REQUEST = -1
+	ITERATOR = ITERATOR + 1
+ENDWHILE
+
+WHILE(1=1)
+	ITERATOR = 0
+	WHILE(ITERATOR < 10)
+		IF(STATUS_BIT_REQUEST > -1) AND (STATUS_BIT_STATE_REQUEST > -1)
+			BANK = INT((STATUS_BIT_REQUEST/16)+1)
+			IF(STATUS_BIT_STATE_REQUEST = 1)
+				IF(GLOBAL_STATUS & STATUS_BIT_REQUEST_DEC = 0)
+					GLOBAL_STATUS = GLOBAL_STATUS + INT(EXP((STATUS_BIT_REQUEST%16)*LN(2))+0.1)
+				ENDIF
+			ELSE
+				IF(GLOBAL_STATUS & STATUS_BIT_REQUEST_DEC = STATUS_BIT_REQUEST_DEC)
+					GLOBAL_STATUS = GLOBAL_STATUS - INT(EXP((STATUS_BIT_REQUEST%16)*LN(2))+0.1)
+				ENDIF
+			ENDIF
+			STATUS_BIT_REQUEST = -1
+			STATUS_BIT_STATE_REQUEST = -1
+		ENDIF
+		ITERATOR = ITERATOR + 1
+	ENDWHILE
+	
+ENDWHILE
+
+
+CLOSE

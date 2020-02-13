@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/controls/!svn/ver/140662/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs
+END
+PLC4_encoder_loss.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/controls/!svn/ver/124435/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC4_encoder_loss.pmc
+END
+PLC25_transfocator_abort.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/subversion/controls/!svn/ver/151668/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC25_transfocator_abort.pmc
+END
+PLC6_Initialise_and_Reset.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/subversion/controls/!svn/ver/71982/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC6_Initialise_and_Reset.pmc
+END
+PLC21_transfocator_filter_out.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/subversion/controls/!svn/ver/151664/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC21_transfocator_filter_out.pmc
+END
+PLC22_transfocator_filter_in.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/subversion/controls/!svn/ver/157494/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC22_transfocator_filter_in.pmc
+END
+PLC10_FSWT_HM.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/controls/!svn/ver/140662/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC10_FSWT_HM.pmc
+END
+PLC5_cpu_load.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/controls/!svn/ver/124435/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC5_cpu_load.pmc
+END
+PLC20_transfocator_main.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/subversion/controls/!svn/ver/151663/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC20_transfocator_main.pmc
+END
+PLC23_transfocator_homing.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/subversion/controls/!svn/ver/151666/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC23_transfocator_homing.pmc
+END
+PLC9_auto_cure.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/controls/!svn/ver/112226/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC9_auto_cure.pmc
+END
+PLC7_Motion_Controls_New_Kill_or_Cure.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/subversion/controls/!svn/ver/112226/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC7_Motion_Controls_New_Kill_or_Cure.pmc
+END
+PLC8_Interlock_Chain.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/controls/!svn/ver/66380/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC8_Interlock_Chain.pmc
+END
+PLC1_BRICK_initialise.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/subversion/controls/!svn/ver/140662/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC1_BRICK_initialise.pmc
+END
+PLC7_power_down_when_idle.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/subversion/controls/!svn/ver/153474/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC7_power_down_when_idle.pmc
+END
+PLC24_transfocator_filter_mask.pmc
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/subversion/controls/!svn/ver/151667/diamond/trunk/motion/BL04I/Settings/BL04I-MO-STEP-04/PLCs/PLC24_transfocator_filter_mask.pmc
+END
